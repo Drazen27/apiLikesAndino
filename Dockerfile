@@ -1,4 +1,5 @@
-from openjdk:21
-ADD target/springboot-eks.jar springboot-eks.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","springboot-eks.jar"]
+FROM openjdk:21
+
+COPY target/springboot-eks.jar app.jar
+
+ENTRYPOINT [ "java" , "-jar", ¨/app.jar¨  ]
