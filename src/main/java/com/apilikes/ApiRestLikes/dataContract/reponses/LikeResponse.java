@@ -1,10 +1,11 @@
 package com.apilikes.ApiRestLikes.dataContract.reponses;
 
-import com.apilikes.ApiRestLikes.Entities.Like;
 import com.apilikes.ApiRestLikes.dataContract.Response;
+import com.apilikes.ApiRestLikes.models.Like;
+
 import java.util.List;
 
-public class LikeGetResponse extends Response {
+public class LikeResponse extends Response {
     private List<Like> data;
 
     // Getters y setters
