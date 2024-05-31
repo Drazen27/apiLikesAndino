@@ -1,61 +1,66 @@
 package com.apilikes.ApiRestLikes.Services;
 import com.apilikes.ApiRestLikes.Entities.Like;
-import com.apilikes.ApiRestLikes.dataContract.reponses.LikeGetResponse;
-import com.apilikes.ApiRestLikes.dataContract.reponses.LikePostResponse;
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.QueryDocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
-import com.google.firebase.cloud.FirestoreClient;
+import com.apilikes.ApiRestLikes.repository.FirestoreRepository;
+import com.apilikes.ApiRestLikes.repository.IFirestoreRepository;
+
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
-public class LikeService {
+public class LikeService implements IFirestoreRepository<Like> {
 
-    private static final String COLLECTION_NAME = "likes";
+   
+    private  FirestoreRepository firestoreRepository;
     
-     
-    public LikeGetResponse getAllLikes() throws ExecutionException, InterruptedException {
-        Firestore db = FirestoreClient.getFirestore();
-        ApiFuture<QuerySnapshot> query = db.collection(COLLECTION_NAME).get();
-        QuerySnapshot querySnapshot = query.get();
-
-        List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
-        List<Like> likes = new ArrayList<>();
-
-        for (QueryDocumentSnapshot document : documents) {
-            Like like = document.toObject(Like.class);
-            likes.add(like);
-        }
-
-        LikeGetResponse response = new LikeGetResponse();
-        response.setSuccess(true);
-        response.setMessage("Likes fetched successfully");
-        response.setData(likes);
-
-        return response;
+    public LikeService() throws IOException {
+        this.firestoreRepository = new FirestoreRepository("likes");
+    }
+    
+   @Override
+    public List<Like> getAll(Class<Like> clazz) throws ExecutionException, InterruptedException {
+        return firestoreRepository.getAll(clazz);
     }
 
+    @Override
+    public Like getById(Class<Like> clazz, String id) throws ExecutionException, InterruptedException {
+        return firestoreRepository.getById(clazz, id);
+    }
 
-    public LikePostResponse addLike(Like like) throws ExecutionException, InterruptedException {
-        Firestore db = FirestoreClient.getFirestore();
-        ApiFuture<DocumentReference> result = db.collection("likes").add(like);
-
-        LikePostResponse response = new LikePostResponse();
-        response.setSuccess(true);
-        response.setMessage("Like added successfully");
+    @Override
+    public Like add(Like model) throws ExecutionException, InterruptedException {
         try {
-            response.setId(result.get().getId());
-        } catch (Exception e) {
-            response.setSuccess(false);
-            response.setMessage("Failed to add like");
-        }
+            Like aux = new Like();
+            aux.setCancion(model.getCancion());
+            aux.setId_usuario(model.getId_usuario());
 
-        return response;
+            List<Like> likes = searchExact(aux);
+            
+            if (!likes.isEmpty()) {
+                throw new IllegalStateException("Like already exists");
+            }
+            return firestoreRepository.add(model);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("Error accessing fields for search", e);
+        }
+    }
+
+    @Override
+    public Like update(String id, Like model) throws ExecutionException, InterruptedException {
+        return firestoreRepository.update(id, model);
+    }
+    @Override
+    public boolean delete(String id) throws ExecutionException, InterruptedException {
+        return firestoreRepository.delete(id);
+    }
+    @Override
+    public List<Like> search(Like model) throws ExecutionException, InterruptedException, IllegalAccessException{
+        return firestoreRepository.search(Like.class, model);
+    }
+    @Override
+    public List<Like> searchExact(Like model) throws ExecutionException, InterruptedException, IllegalAccessException {
+        return firestoreRepository.searchExact(Like.class, model);
     }
 }

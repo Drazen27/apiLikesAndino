@@ -1,15 +1,12 @@
-package com.apilikes.ApiRestLikes.Entities;
-import com.google.cloud.Timestamp;
+package com.apilikes.ApiRestLikes.dataContract.requests;
 
-public class Like extends FirebaseDocument{
 
+public class LikeRequest {
     private String cancion;
-    private Timestamp fecha;
+    private String fecha;
     private String id_usuario;
-    
+
     // Getters and setters
-
-
     public String getCancion() {
         return cancion;
     }
@@ -18,11 +15,11 @@ public class Like extends FirebaseDocument{
         this.cancion = cancion;
     }
 
-    public Timestamp getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    public void setFecha(Timestamp fecha) {
+    public void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -33,6 +30,4 @@ public class Like extends FirebaseDocument{
     public void setId_usuario(String id_usuario) {
         this.id_usuario = id_usuario;
     }
-
-   
 }

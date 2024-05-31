@@ -4,7 +4,7 @@ import com.apilikes.ApiRestLikes.Entities.Like;
 import com.apilikes.ApiRestLikes.dataContract.Response;
 import java.util.List;
 
-public class LikeGetResponse extends Response {
+public class LikeResponse extends Response {
     private List<Like> data;
 
     // Getters y setters

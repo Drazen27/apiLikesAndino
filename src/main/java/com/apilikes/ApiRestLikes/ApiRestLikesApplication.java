@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class ApiRestLikesApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ApiRestLikesApplication.class, args);
-	}
+        SpringApplication.run(ApiRestLikesApplication.class, args);
+    }
 
 }
