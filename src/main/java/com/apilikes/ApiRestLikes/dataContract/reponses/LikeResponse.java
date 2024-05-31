@@ -1,7 +1,8 @@
 package com.apilikes.ApiRestLikes.dataContract.reponses;
 
-import com.apilikes.ApiRestLikes.Entities.Like;
 import com.apilikes.ApiRestLikes.dataContract.Response;
+import com.apilikes.ApiRestLikes.models.Like;
+
 import java.util.List;
 
 public class LikeResponse extends Response {

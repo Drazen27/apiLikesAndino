@@ -1,6 +1,6 @@
 package com.apilikes.ApiRestLikes.repository;
 
-import com.apilikes.ApiRestLikes.Entities.FirebaseDocument;
+import com.apilikes.ApiRestLikes.models.FirebaseDocument;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.core.ApiFuture;
 import com.google.auth.oauth2.GoogleCredentials;

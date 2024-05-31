@@ -1,4 +1,4 @@
-package com.apilikes.ApiRestLikes.Entities;
+package com.apilikes.ApiRestLikes.models;
 import com.google.cloud.Timestamp;
 
 public class Like extends FirebaseDocument{

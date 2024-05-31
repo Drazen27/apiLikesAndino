@@ -1,19 +1,20 @@
-package com.apilikes.ApiRestLikes.Controller;
+package com.apilikes.ApiRestLikes.controllers;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import com.apilikes.ApiRestLikes.Entities.Like;
 import com.apilikes.ApiRestLikes.Services.LikeService;
 import com.apilikes.ApiRestLikes.dataContract.reponses.LikeResponse;
 import com.apilikes.ApiRestLikes.dataContract.requests.LikeRequest;
+import com.apilikes.ApiRestLikes.models.Like;
 import com.google.cloud.Timestamp;
 
 
 @RestController
 @RequestMapping("/api/likes")
+@CrossOrigin(origins = "*", allowedHeaders = "Origin, X-Requested-With, Content-Type, Accept", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 public class LikeController {
     
     private final LikeService likeService;

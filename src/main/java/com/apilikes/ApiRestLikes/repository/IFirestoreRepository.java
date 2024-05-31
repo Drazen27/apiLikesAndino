@@ -3,7 +3,7 @@ package com.apilikes.ApiRestLikes.repository;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
-import com.apilikes.ApiRestLikes.Entities.FirebaseDocument;
+import com.apilikes.ApiRestLikes.models.FirebaseDocument;
 
 
 public interface IFirestoreRepository<T extends FirebaseDocument> {

@@ -1,5 +1,5 @@
 package com.apilikes.ApiRestLikes.Services;
-import com.apilikes.ApiRestLikes.Entities.Like;
+import com.apilikes.ApiRestLikes.models.Like;
 import com.apilikes.ApiRestLikes.repository.FirestoreRepository;
 import com.apilikes.ApiRestLikes.repository.IFirestoreRepository;
 
