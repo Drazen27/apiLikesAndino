@@ -2,7 +2,7 @@ package com.apilikes.ApiRestLikes.models;
 import com.google.cloud.Timestamp;
 
 public class Like extends FirebaseDocument{
-
+    
     private String cancion;
     private Timestamp fecha;
     private String id_usuario;
