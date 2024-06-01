@@ -1,5 +1,5 @@
-FROM openjdk:21
+FROM bellsoft/liberica-openjdk-debian:21
 
-COPY target/springboot-eks.jar app.jar
+COPY target/ApiRestLikes-0.0.1-SNAPSHOT.jar app.jar
 
 ENTRYPOINT [ "java" , "-jar", ¨/app.jar¨  ]
