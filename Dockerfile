@@ -1,4 +1,4 @@
-FROM openjdk:21-alpine-jdk
+FROM openjdk:22 AS build
 
 COPY target/ApiRestLikes-0.0.1-SNAPSHOT.jar app.jar
 
