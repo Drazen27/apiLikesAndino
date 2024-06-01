@@ -10,7 +10,7 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 // import org.springframework.stereotype.Service;
 
-import io.github.cdimascio.dotenv.Dotenv;
+// import io.github.cdimascio.dotenv.Dotenv;
 
 import java.io.ByteArrayInputStream;
 // import java.io.FileInputStream;
@@ -31,17 +31,14 @@ public class FirestoreRepository {
     private  String CollectionName;
     private  Firestore firestoreDb;
 
-   public FirestoreRepository(String CollectionName) throws IOException {
-        // Cargar variables de entorno desde el archivo .env
-        Dotenv dotenv = Dotenv.configure().load();
-
-        // Obtener las variables de entorno necesarias
-        String projectId = dotenv.get("PROJECT_ID");
-        String privateKeyId = dotenv.get("PRIVATE_KEY_ID");
-        String privateKey = dotenv.get("PRIVATE_KEY").replace("\\n", "\n");
-        String clientEmail = dotenv.get("CLIENT_EMAIL");
-        String clientId = dotenv.get("CLIENT_ID");
-
+    public FirestoreRepository(String CollectionName) throws IOException {
+        // Obtener las variables de entorno necesarias directamente
+        String projectId = System.getenv("PROJECT_ID");
+        String privateKeyId = System.getenv("PRIVATE_KEY_ID");
+        String privateKey = System.getenv("PRIVATE_KEY").replace("\\n", "\n");
+        String clientEmail = System.getenv("CLIENT_EMAIL");
+        String clientId = System.getenv("CLIENT_ID");
+    
         // Crear credenciales personalizadas
         Map<String, Object> credentials = new HashMap<>();
         credentials.put("type", "service_account");
@@ -50,15 +47,15 @@ public class FirestoreRepository {
         credentials.put("private_key", privateKey);
         credentials.put("client_email", clientEmail);
         credentials.put("client_id", clientId);
-        credentials.put("auth_uri", dotenv.get("AUTH_URI"));
-        credentials.put("token_uri", dotenv.get("TOKEN_URI"));
-        credentials.put("auth_provider_x509_cert_url", dotenv.get("AUTH_PROVIDER_X509_CERT_URL"));
-        credentials.put("client_x509_cert_url", dotenv.get("CLIENT_X509_CERT_URL"));
-
+        credentials.put("auth_uri", System.getenv("AUTH_URI"));
+        credentials.put("token_uri", System.getenv("TOKEN_URI"));
+        credentials.put("auth_provider_x509_cert_url", System.getenv("AUTH_PROVIDER_X509_CERT_URL"));
+        credentials.put("client_x509_cert_url", System.getenv("CLIENT_X509_CERT_URL"));
+    
         // Convertir el mapa de credenciales a un InputStream
         String credentialsJson = new ObjectMapper().writeValueAsString(credentials);
         ByteArrayInputStream credentialsStream = new ByteArrayInputStream(credentialsJson.getBytes());
-
+    
         // Inicializar FirebaseApp solo si no se ha inicializado
         if (FirebaseApp.getApps().isEmpty()) {
             @SuppressWarnings("deprecation")
@@ -68,7 +65,7 @@ public class FirestoreRepository {
                 .build();
             FirebaseApp.initializeApp(options);
         }
-
+    
         this.firestoreDb = FirestoreClient.getFirestore();
         this.CollectionName = CollectionName;
     }
