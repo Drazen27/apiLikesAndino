@@ -1,5 +1,1 @@
-FROM bellsoft/liberica-openjdk-debian:21
-
-COPY target/ApiRestLikes-0.0.1-SNAPSHOT.jar app.jar
-
-ENTRYPOINT [ "java" , "-jar", ¨/app.jar¨  ]
+FROM bellsoft/liberica-openjdk-alpine:21
