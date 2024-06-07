@@ -9,7 +9,7 @@ import com.apilikes.ApiRestLikes.Services.LikeService;
 import com.apilikes.ApiRestLikes.dataContract.reponses.LikeResponse;
 import com.apilikes.ApiRestLikes.dataContract.requests.LikeRequest;
 import com.apilikes.ApiRestLikes.models.Like;
-import com.google.cloud.Timestamp;
+// import com.google.cloud.Timestamp;
 
 
 @RestController
@@ -35,6 +35,30 @@ public class LikeController {
                 response.setSuccess(true);
                 response.setMessage("Like found");
                 response.setData(List.of(like));
+                return ResponseEntity.ok(response);
+            } else {
+                response.setSuccess(false);
+                response.setMessage("Like not found");
+                return ResponseEntity.status(404).body(response);
+            }
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
+            LikeResponse response = new LikeResponse();
+            response.setSuccess(false);
+            response.setMessage("Internal server error");
+            return ResponseEntity.status(500).body(response);
+        }
+    }
+    @GetMapping("/getByUser/{id}")
+    public ResponseEntity<LikeResponse> getByUser(@PathVariable String id) {
+        try {
+            List<Like> like = likeService.getByField(Like.class,"id_usuario",id);
+            LikeResponse response = new LikeResponse();
+
+            if (like != null) {
+                response.setSuccess(true);
+                response.setMessage("Like found");
+                response.setData(like);
                 return ResponseEntity.ok(response);
             } else {
                 response.setSuccess(false);
@@ -75,8 +99,8 @@ public class LikeController {
             Like like = new Like(); 
             like.setCancion(likeReq.getCancion());
             like.setId_usuario(likeReq.getId_usuario());
-            if(likeReq.getFecha()!=null)
-                like.setFecha(Timestamp.parseTimestamp(likeReq.getFecha()));
+            // if(likeReq.getFecha()!=null)
+            //     like.setFecha(Timestamp.parseTimestamp(likeReq.getFecha()));
 
             Like addedLike = likeService.add(like);
 
@@ -97,8 +121,8 @@ public class LikeController {
             Like like = new Like(); 
             like.setCancion(likeReq.getCancion());
             like.setId_usuario(likeReq.getId_usuario());
-            if(likeReq.getFecha()!=null)
-                like.setFecha(Timestamp.parseTimestamp(likeReq.getFecha()));
+            // if(likeReq.getFecha()!=null)
+            //     like.setFecha(Timestamp.parseTimestamp(likeReq.getFecha()));
 
             Like updatedLike = likeService.update(id, like);
 
@@ -149,8 +173,8 @@ public class LikeController {
             Like model = new Like(); 
             model.setCancion(likeReq.getCancion());
             model.setId_usuario(likeReq.getId_usuario());
-            if(likeReq.getFecha()!=null)
-                model.setFecha(Timestamp.parseTimestamp(likeReq.getFecha()));
+            // if(likeReq.getFecha()!=null)
+            //     model.setFecha(Timestamp.parseTimestamp(likeReq.getFecha()));
 
             List<Like> likes = likeService.search(model);
             LikeResponse response = new LikeResponse();
@@ -173,8 +197,8 @@ public class LikeController {
             Like model = new Like(); 
             model.setCancion(likeReq.getCancion());
             model.setId_usuario(likeReq.getId_usuario());
-            if(likeReq.getFecha()!=null)
-                model.setFecha(Timestamp.parseTimestamp(likeReq.getFecha()));
+            // if(likeReq.getFecha()!=null)
+            //     model.setFecha(Timestamp.parseTimestamp(likeReq.getFecha()));
 
             List<Like> likes = likeService.searchExact(model);
             LikeResponse response = new LikeResponse();

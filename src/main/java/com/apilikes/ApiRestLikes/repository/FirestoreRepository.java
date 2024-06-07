@@ -10,6 +10,8 @@ import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
 // import org.springframework.stereotype.Service;
 
+import io.github.cdimascio.dotenv.Dotenv;
+
 // import io.github.cdimascio.dotenv.Dotenv;
 
 import java.io.ByteArrayInputStream;
@@ -38,7 +40,7 @@ public class FirestoreRepository {
         String privateKey = System.getenv("PRIVATE_KEY").replace("\\n", "\n");
         String clientEmail = System.getenv("CLIENT_EMAIL");
         String clientId = System.getenv("CLIENT_ID");
-    
+   
         // Crear credenciales personalizadas
         Map<String, Object> credentials = new HashMap<>();
         credentials.put("type", "service_account");
@@ -51,11 +53,11 @@ public class FirestoreRepository {
         credentials.put("token_uri", System.getenv("TOKEN_URI"));
         credentials.put("auth_provider_x509_cert_url", System.getenv("AUTH_PROVIDER_X509_CERT_URL"));
         credentials.put("client_x509_cert_url", System.getenv("CLIENT_X509_CERT_URL"));
-    
+   
         // Convertir el mapa de credenciales a un InputStream
         String credentialsJson = new ObjectMapper().writeValueAsString(credentials);
         ByteArrayInputStream credentialsStream = new ByteArrayInputStream(credentialsJson.getBytes());
-    
+   
         // Inicializar FirebaseApp solo si no se ha inicializado
         if (FirebaseApp.getApps().isEmpty()) {
             @SuppressWarnings("deprecation")
@@ -65,7 +67,7 @@ public class FirestoreRepository {
                 .build();
             FirebaseApp.initializeApp(options);
         }
-    
+   
         this.firestoreDb = FirestoreClient.getFirestore();
         this.CollectionName = CollectionName;
     }
@@ -86,7 +88,29 @@ public class FirestoreRepository {
         }
         return null;
     }
-
+    public <T extends FirebaseDocument> List<T> getByField(Class<T> clazz, String fieldName, String fieldValue) throws ExecutionException, InterruptedException {
+        // Crear una referencia a la colección
+        CollectionReference collectionRef = firestoreDb.collection(CollectionName);
+    
+        // Crear la consulta para buscar por el campo específico
+        Query query = collectionRef.whereEqualTo(fieldName, fieldValue);
+    
+        // Ejecutar la consulta
+        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+    
+        // Procesar los resultados de la consulta
+        List<QueryDocumentSnapshot> documents = querySnapshot.get().getDocuments();
+        List<T> results = new ArrayList<>();
+        for (DocumentSnapshot snapshot : documents) {
+            T record = snapshot.toObject(clazz);
+            if (record != null) {
+                record.setId(snapshot.getId());
+                results.add(record);
+            }
+        }
+    
+        return results;
+    }
     public <T extends FirebaseDocument> List<T> getAll(Class<T> clazz) throws ExecutionException, InterruptedException {
         CollectionReference collectionRef = firestoreDb.collection(CollectionName);
         ApiFuture<QuerySnapshot> querySnapshot = collectionRef.get();

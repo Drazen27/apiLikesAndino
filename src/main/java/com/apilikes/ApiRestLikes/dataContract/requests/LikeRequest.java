@@ -3,7 +3,7 @@ package com.apilikes.ApiRestLikes.dataContract.requests;
 
 public class LikeRequest {
     private String cancion;
-    private String fecha;
+    // private String fecha;
     private String id_usuario;
 
     // Getters and setters
@@ -15,13 +15,13 @@ public class LikeRequest {
         this.cancion = cancion;
     }
 
-    public String getFecha() {
-        return fecha;
-    }
+    // public String getFecha() {
+    //     return fecha;
+    // }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
-    }
+    // public void setFecha(String fecha) {
+    //     this.fecha = fecha;
+    // }
 
     public String getId_usuario() {
         return id_usuario;

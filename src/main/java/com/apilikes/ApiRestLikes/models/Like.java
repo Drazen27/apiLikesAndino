@@ -1,10 +1,10 @@
 package com.apilikes.ApiRestLikes.models;
-import com.google.cloud.Timestamp;
+// import com.google.cloud.Timestamp;
 
 public class Like extends FirebaseDocument{
     
     private String cancion;
-    private Timestamp fecha;
+    // private Timestamp fecha;
     private String id_usuario;
     
     // Getters and setters
@@ -18,13 +18,13 @@ public class Like extends FirebaseDocument{
         this.cancion = cancion;
     }
 
-    public Timestamp getFecha() {
-        return fecha;
-    }
+    // public Timestamp getFecha() {
+    //     return fecha;
+    // }
 
-    public void setFecha(Timestamp fecha) {
-        this.fecha = fecha;
-    }
+    // public void setFecha(Timestamp fecha) {
+    //     this.fecha = fecha;
+    // }
 
     public String getId_usuario() {
         return id_usuario;

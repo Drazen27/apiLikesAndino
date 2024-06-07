@@ -63,4 +63,10 @@ public class LikeService implements IFirestoreRepository<Like> {
     public List<Like> searchExact(Like model) throws ExecutionException, InterruptedException, IllegalAccessException {
         return firestoreRepository.searchExact(Like.class, model);
     }
+
+    @Override
+    public List<Like> getByField(Class<Like> clazz, String fieldName, String fieldValue) throws ExecutionException, InterruptedException {
+        return firestoreRepository.getByField(clazz, fieldName, fieldValue);
+    }
+    
 }
