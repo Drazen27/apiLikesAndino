@@ -19,7 +19,7 @@ public class JwtUtil {
 
     public JwtUtil() {
         Dotenv dotenv = Dotenv.load();
-        this.secret = Keys.hmacShaKeyFor(dotenv.get("SECRET").getBytes());
+        this.secret = Keys.hmacShaKeyFor(System.getenv("SECRET").getBytes());
     }
     
     public Boolean validateToken(String token) {
