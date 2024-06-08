@@ -18,7 +18,7 @@ public class JwtUtil {
     private final Key secret;
 
     public JwtUtil() {
-        Dotenv dotenv = Dotenv.load();
+        //Dotenv dotenv = Dotenv.load();
         this.secret = Keys.hmacShaKeyFor(System.getenv("SECRET").getBytes());
     }
     
