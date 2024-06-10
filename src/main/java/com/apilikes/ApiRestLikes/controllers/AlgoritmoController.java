@@ -9,6 +9,7 @@ import com.apilikes.ApiRestLikes.Services.AlgoritmoService;
 
 @RestController
 @RequestMapping("/api/algoritmo")
+@CrossOrigin(origins = "*", allowedHeaders = "Origin, X-Requested-With, Content-Type, Accept", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE, RequestMethod.OPTIONS})
 public class AlgoritmoController {
 
     @Autowired
