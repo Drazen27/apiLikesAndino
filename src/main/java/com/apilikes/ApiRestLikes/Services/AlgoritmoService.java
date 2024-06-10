@@ -49,7 +49,8 @@ public class AlgoritmoService {
         List<String> otrosMicroservicios = List.of("https://apil-istas.vercel.app/api/algoritmo/recibirMarcador", "https://www.andsoundapi.somee.com/api/algoritmo/recibirMarcador");
 
         for (String url : otrosMicroservicios) {
-            restTemplate.postForEntity(url, null, String.class, "from", "springboot");
+            restTemplate.postForEntity(url + "?from=springboot", null, String.class);
+
         }
     }
 
