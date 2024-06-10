@@ -29,7 +29,7 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/authenticate", "/public/**", 
-                                         "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll() // Rutas públicas y Swagger
+                                         "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html","/api/algoritmo/**").permitAll() // Rutas públicas y Swagger
                         .requestMatchers("/api/likes/**").authenticated() // Rutas protegidas
                         .anyRequest().authenticated() // Protege cualquier otra ruta
                 )
